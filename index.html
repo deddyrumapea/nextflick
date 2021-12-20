@@ -10,7 +10,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/styles.css" />
-    <title>NextFlick | Discover what flick to watch next</title>
+    <title>NextFlick - Discover What Flick to Watch Next</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -59,30 +59,39 @@
           <div class="jumbotron-overlay"></div>
         </div>
       </div>
-      <div class="carousel-caption d-none d-md-block">
+      <div class="carousel-caption">
         <h1>Welcome</h1>
         <h5>
           Millions of movies, TV shows and people to discover. Explore now.
         </h5>
         <br />
-        <div class="input-group mb-3">
-          <input
-            type="search"
-            class="form-control"
-            placeholder="Search for a movie, tv show, person..."
-            aria-label="Search for a movie, tv show, person..."
-            aria-describedby="button-search"
-          />
-          <button class="btn btn-primary" type="button" id="button-search">
-            Search
-          </button>
-        </div>
+        <form id="form-search" action="#">
+          <div class="input-group mb-3">
+            <input
+              id="search-bar"
+              type="search"
+              class="form-control"
+              placeholder="Search for a movie, tv show, person..."
+              aria-label="Search for a movie, tv show, person..."
+              aria-describedby="button-search"
+              required
+            />
+            <button class="btn btn-primary" type="submit" id="button-search">
+              Search
+            </button>
+          </div>
+        </form>
       </div>
     </div>
 
-    <div class="row my-5 mx-3">
+    <div class="row my-3 mx-3">
+      <div
+        id="alert-main"
+        class="alert alert-primary visually-hidden"
+        role="alert"
+      ></div>
       <div class="col-md-6">
-        <h5>Trending Movies</h5>
+        <h5>Movies</h5>
         <div id="container-movies"></div>
         <ul
           id="pagination-movies"
@@ -90,10 +99,13 @@
         ></ul>
       </div>
       <div class="col-md-6">
-        <h5>Trending TV Shows</h5>
+        <h5>TV Shows</h5>
         <div id="container-tv-shows"></div>
       </div>
     </div>
+    <footer class="border-top py-3 my-4">
+      <p class="text-center text-muted">&copy; 2021 CloverFolks</p>
+    </footer>
     <script type="module" src="presentation/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script
