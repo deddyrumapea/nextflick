@@ -1,10 +1,47 @@
 import ApiTmdb from "../data/api/ApiTmdb.js";
 import ApiUnsplash from "../data/api/ApiUnsplash.js";
 
+let formSearch = document.querySelector("#form-search");
+
 let containerMovies = document.querySelector("#container-movies");
 let containerTvShows = document.querySelector("#container-tv-shows");
 let currentMoviePage = 1;
 let currentTvShowPage = 1;
+
+formSearch.onsubmit = (e) => {
+  e.preventDefault();
+
+  let query = document.querySelector("#search-bar").value.trim();
+  if (query == "") return;
+
+  let alertMain = document.querySelector("#alert-main");
+
+  ApiTmdb.searchMovies(query, (responseText) => {
+    let response = JSON.parse(responseText);
+    let movies = response.results;
+
+    containerMovies.innerHTML = "";
+    alertMain.innerHTML = `Showing search results for ${query}. <a href=''>Reset.</a>`;
+    alertMain.classList.remove("visually-hidden");
+
+    movies.forEach((movie) => {
+      containerMovies.innerHTML += movieCard(movie);
+    });
+  });
+
+  ApiTmdb.searchTvShows(query, (responseText) => {
+    let response = JSON.parse(responseText);
+    let tvShows = response.results;
+
+    containerTvShows.innerHTML = "";
+    alertMain.innerHTML = `Showing search results for ${query}. <a href=''>Reset.</a>`;
+    alertMain.classList.remove("visually-hidden");
+
+    tvShows.forEach((tvShow) => {
+      containerTvShows.innerHTML += tvShowCard(tvShow);
+    });
+  });
+};
 
 ApiUnsplash.getPhotos("movies", (responseText) => {
   let response = JSON.parse(responseText);
@@ -21,8 +58,6 @@ ApiTmdb.getDiscoverMovies(currentMoviePage, (responseText) => {
   movies.forEach((movie) => {
     containerMovies.innerHTML += movieCard(movie);
   });
-
-  let totalPages = response.total_pages;
 });
 
 ApiTmdb.getDiscoverTVShows(currentTvShowPage, (responseText) => {

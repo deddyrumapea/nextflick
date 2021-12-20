@@ -28,4 +28,16 @@ export default class ApiTmdb {
     let params = `?api_key=${this.API_KEY}`;
     ApiService.sendRequest(this.BASE_URL + path + params, onReady);
   }
+
+  static searchMovies(query, onReady) {
+    let path = "search/movie";
+    let params = `?query=${query}&api_key=${this.API_KEY}`;
+    ApiService.sendRequest(this.BASE_URL + path + params, onReady);
+  }
+
+  static searchTvShows(query, onReady) {
+    let path = "search/tv";
+    let params = `?query=${query}&api_key=${this.API_KEY}`;
+    ApiService.sendRequest(this.BASE_URL + path + params, onReady);
+  }
 }
