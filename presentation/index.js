@@ -1,14 +1,22 @@
-import ApiService from "../data/ApiService.js";
+import ApiTmdb from "../data/api/ApiTmdb.js";
+import ApiUnsplash from "../data/api/ApiUnsplash.js";
 
 let containerMovies = document.querySelector("#container-movies");
 let containerTvShows = document.querySelector("#container-tv-shows");
 let currentMoviePage = 1;
 let currentTvShowPage = 1;
 
-ApiService.getDiscoverMovies(currentMoviePage, (responseText) => {
+ApiUnsplash.getPhotos("movies", (responseText) => {
   let response = JSON.parse(responseText);
-  console.log(response);
+  let randomIndex = Math.floor(Math.random() * response.results.length);
+  let imageSrc = response.results[randomIndex].urls.full;
 
+  let imgJumbotron = document.querySelector("#img-jumbotron");
+  imgJumbotron.src = imageSrc;
+});
+
+ApiTmdb.getDiscoverMovies(currentMoviePage, (responseText) => {
+  let response = JSON.parse(responseText);
   let movies = response.results;
   movies.forEach((movie) => {
     containerMovies.innerHTML += movieCard(movie);
@@ -17,9 +25,8 @@ ApiService.getDiscoverMovies(currentMoviePage, (responseText) => {
   let totalPages = response.total_pages;
 });
 
-ApiService.getDiscoverTVShows(currentTvShowPage, (responseText) => {
+ApiTmdb.getDiscoverTVShows(currentTvShowPage, (responseText) => {
   let response = JSON.parse(responseText);
-  // console.log(response);
   let tvShows = response.results;
   tvShows.forEach((tvShow) => {
     containerTvShows.innerHTML += tvShowCard(tvShow);
@@ -32,7 +39,7 @@ function movieCard(movie) {
     <div class="row g-0">
       <div class="col-2">
         <img 
-          src="${ApiService.IMAGE_BASE_URL_500 + movie.poster_path}" 
+          src="${ApiTmdb.IMAGE_BASE_URL_500 + movie.poster_path}" 
           class="img-fluid rounded"
           alt="${movie.original_title}" />
       </div>
@@ -58,7 +65,7 @@ function tvShowCard(tvShow) {
     <div class="row g-0">
       <div class="col-2">
         <img 
-          src="${ApiService.IMAGE_BASE_URL_500 + tvShow.poster_path}" 
+          src="${ApiTmdb.IMAGE_BASE_URL_500 + tvShow.poster_path}" 
           class="img-fluid rounded"
           alt="${tvShow.name}" />
       </div>
