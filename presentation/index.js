@@ -271,6 +271,13 @@ function formatMovie(movie) {
   movie.poster_path = ApiTmdb.IMAGE_BASE_URL_500 + movie.poster_path;
   movie.year = moment(movie.release_date, "YYYY-MM-DD").format("YYYY");
 
+  let formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+  movie.budget = formatter.format(movie.budget);
+  movie.revenue = formatter.format(movie.revenue);
+
   let genres = "";
   movie.genres.forEach((genre, i) => {
     genres += (i > 0 ? ", " : "") + genre.name;
