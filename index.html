@@ -9,6 +9,10 @@
       crossorigin="anonymous"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+    />
     <link rel="stylesheet" href="assets/styles.css" />
     <title>NextFlick - Discover What Flick to Watch Next</title>
   </head>
@@ -77,7 +81,7 @@
               required
             />
             <button class="btn btn-primary" type="submit" id="button-search">
-              Search
+              <i class="bi bi-search"></i>
             </button>
           </div>
         </form>
@@ -92,20 +96,350 @@
       ></div>
       <div class="col-md-6">
         <h5>Movies</h5>
+
+        <div id="card-movies-loading" class="card mb-3 bg-secondary bg-light">
+          <div class="row g-0">
+            <div class="col-2 bg-secondary bg-gradient bg-opacity-10">
+            </div>
+            <div class="col-10">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div
+                      class="progress progress-bar progress-bar-striped progress-bar-animated bg-secondary bg-opacity-10"
+                      style="width: 100%"
+                    >
+                  </div>
+                </h5>
+                <p class="card-text flick-overview">
+                  <div
+                      class="progress progress-bar progress-bar-striped progress-bar-animated bg-secondary bg-opacity-10"
+                      style="width: 100%"
+                    >
+                  </div>
+                </p>
+                <p class="card-text">
+                  <small class="text-muted">
+                    <div
+                      class="progress progress-bar progress-bar-striped progress-bar-animated bg-secondary bg-opacity-10"
+                      style="width: 100%"
+                    >
+                  </div>
+                  </small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div id="container-movies"></div>
-        <ul
-          id="pagination-movies"
-          class="pagination justify-content-center"
-        ></ul>
       </div>
       <div class="col-md-6">
         <h5>TV Shows</h5>
+
+        <div id="card-tvshows-loading" class="card mb-3 bg-secondary bg-light">
+          <div class="row g-0">
+            <div class="col-2 bg-secondary bg-gradient bg-opacity-10">
+            </div>
+            <div class="col-10">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div
+                      class="progress progress-bar progress-bar-striped progress-bar-animated bg-secondary bg-opacity-10"
+                      style="width: 100%"
+                    >
+                  </div>
+                </h5>
+                <p class="card-text flick-overview">
+                  <div
+                      class="progress progress-bar progress-bar-striped progress-bar-animated bg-secondary bg-opacity-10"
+                      style="width: 100%"
+                    >
+                  </div>
+                </p>
+                <p class="card-text">
+                  <small class="text-muted">
+                    <div
+                      class="progress progress-bar progress-bar-striped progress-bar-animated bg-secondary bg-opacity-10"
+                      style="width: 100%"
+                    >
+                  </div>
+                  </small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div id="container-tv-shows"></div>
       </div>
     </div>
     <footer class="border-top py-3 my-4">
       <p class="text-center text-muted">&copy; 2021 CloverFolks</p>
     </footer>
+
+    <div
+      class="modal fade"
+      id="modal-movie-detail"
+      tabindex="-1"
+      aria-hidden="true"
+      aria-labelledby="modal-movie-title"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Movie Detail</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="modal-movie-body">
+            <div class="card mb-3">
+              <div class="row g-0">
+                <div class="col-2">
+                  <img id="movie-detail-poster" class="img-fluid rounded" />
+                </div>
+                <div class="col-10">
+                  <div class="card-body">
+                    <h5 id="movie-detail-title" class="card-title"></h5>
+                    <p class="card-text">
+                      <small id="movie-detail-vote" class="text-muted"> </small>
+                      <small
+                        id="movie-detail-release-date"
+                        class="text-muted"
+                      ></small>
+                      <small
+                        id="movie-detail-runtime"
+                        class="text-muted"
+                      ></small>
+                    </p>
+                    <p class="card-text text-center">
+                      <small
+                        id="movie-detail-tagline"
+                        class="text-muted fst-italic"
+                      ></small>
+                    </p>
+                    <h6>Overview</h6>
+                    <p id="movie-detail-overview" class="card-text"></p>
+                  </div>
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <th scope="row"><i class="bi bi-stars"></i> Genres</th>
+                        <td id="movie-detail-genres"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-cart-check"></i> Budget
+                        </th>
+                        <td id="movie-detail-budget"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-currency-dollar"></i> Revenue
+                        </th>
+                        <td id="movie-detail-revenue"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-activity"></i> Status
+                        </th>
+                        <td id="movie-detail-status"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-chat-text"></i> Original Language
+                        </th>
+                        <td id="movie-detail-original-language"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-heart"></i> Popularity
+                        </th>
+                        <td id="movie-detail-popularity"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-chat-left-quote"></i> Spoken Languages
+                        </th>
+                        <td id="movie-detail-spoken-languages"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-flag"></i> Production Countries
+                        </th>
+                        <td id="movie-detail-production-countries"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-building"></i> Production Companies
+                        </th>
+                        <td id="movie-detail-production-companies"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-link-45deg"></i> External Links
+                        </th>
+                        <td>
+                          <a
+                            href="#"
+                            id="movie-detail-imdb"
+                            target="_blank"
+                            class="btn btn-warning btn-sm"
+                            >IMDB</a
+                          >
+                          <a
+                            href="#"
+                            id="movie-detail-homepage"
+                            target="_blank"
+                            class="btn btn-success btn-sm"
+                            >Homepage</a
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="modal-tvshow-detail"
+      tabindex="-1"
+      aria-hidden="true"
+      aria-labelledby="modal-tvshow-title"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">TV Show Detail</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="modal-tvshow-body">
+            <div class="card mb-3">
+              <div class="row g-0">
+                <div class="col-2">
+                  <img id="tvshow-detail-poster" class="img-fluid rounded" />
+                </div>
+                <div class="col-10">
+                  <div class="card-body">
+                    <h5 id="tvshow-detail-title" class="card-title"></h5>
+                    <p class="card-text">
+                      <small id="tvshow-detail-vote" class="text-muted">
+                      </small>
+                      <small
+                        id="tvshow-detail-release-date"
+                        class="text-muted"
+                      ></small>
+                      <small
+                        id="tvshow-detail-runtime"
+                        class="text-muted"
+                      ></small>
+                    </p>
+                    <p class="card-text text-center">
+                      <small
+                        id="tvshow-detail-tagline"
+                        class="text-muted fst-italic"
+                      ></small>
+                    </p>
+                    <h6>Overview</h6>
+                    <p id="tvshow-detail-overview" class="card-text"></p>
+                  </div>
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <th scope="row"><i class="bi bi-stars"></i> Genres</th>
+                        <td id="tvshow-detail-genres"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-camera-reels"></i> In Production
+                        </th>
+                        <td id="tvshow-detail-inproduction"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-person"></i> Created by
+                        </th>
+                        <td id="tvshow-detail-createdby"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-activity"></i> Status
+                        </th>
+                        <td id="tvshow-detail-status"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-chat-text"></i> Original Language
+                        </th>
+                        <td id="tvshow-detail-original-language"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-heart"></i> Popularity
+                        </th>
+                        <td id="tvshow-detail-popularity"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-chat-left-quote"></i> Spoken Languages
+                        </th>
+                        <td id="tvshow-detail-spoken-languages"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-flag"></i> Production Countries
+                        </th>
+                        <td id="tvshow-detail-production-countries"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-building"></i> Production Companies
+                        </th>
+                        <td id="tvshow-detail-production-companies"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <i class="bi bi-link-45deg"></i> External Links
+                        </th>
+                        <td>
+                          <a
+                            href="#"
+                            id="tvshow-detail-imdb"
+                            target="_blank"
+                            class="btn btn-warning btn-sm"
+                            >IMDB</a
+                          >
+                          <a
+                            href="#"
+                            id="tvshow-detail-homepage"
+                            target="_blank"
+                            class="btn btn-success btn-sm"
+                            >Homepage</a
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="presentation/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script

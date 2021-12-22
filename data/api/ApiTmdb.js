@@ -23,7 +23,7 @@ export default class ApiTmdb {
     ApiService.sendRequest(this.BASE_URL + path + params, onReady);
   }
 
-  static getTvSeriesDetail(id, onReady) {
+  static getTvShowDetail(id, onReady) {
     let path = `tv/${id}`;
     let params = `?api_key=${this.API_KEY}`;
     ApiService.sendRequest(this.BASE_URL + path + params, onReady);
