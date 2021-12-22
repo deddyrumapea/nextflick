@@ -123,6 +123,10 @@ function setTvShowCardOnClickCallback() {
 function populateTvShowDetail(tvShow) {
   tvShow = formatTvShow(tvShow);
 
+  document.querySelector(
+    "#tvshow-detail-card"
+  ).style.backgroundImage = `url('${tvShow.backdrop_path}')`;
+
   document.querySelector("#tvshow-detail-poster").src = tvShow.poster_path;
   document.querySelector("#tvshow-detail-title").innerHTML = tvShow.name;
 
@@ -170,6 +174,7 @@ function populateTvShowDetail(tvShow) {
 }
 
 function formatTvShow(tvShow) {
+  tvShow.backdrop_path = ApiTmdb.IMAGE_BASE_URL_500 + tvShow.backdrop_path;
   tvShow.poster_path = ApiTmdb.IMAGE_BASE_URL_500 + tvShow.poster_path;
 
   let genres = "";
@@ -192,7 +197,7 @@ function formatTvShow(tvShow) {
 
   let productionCompanies = "";
   tvShow.production_companies.forEach((company, i) => {
-    productionCompanies += (i > 0 ? ", " : "") + company.name;
+    productionCompanies += (i > 0 ? "<br/>" : "") + company.name;
   });
   tvShow.production_companies = productionCompanies;
 
@@ -211,6 +216,10 @@ function formatTvShow(tvShow) {
 
 function populateMovieDetail(movie) {
   movie = formatMovie(movie);
+
+  document.querySelector(
+    "#movie-detail-card"
+  ).style.backgroundImage = `url('${movie.backdrop_path}')`;
 
   document.querySelector("#movie-detail-poster").src = movie.poster_path;
   document.querySelector("#movie-detail-title").innerHTML =
@@ -258,6 +267,7 @@ function populateMovieDetail(movie) {
 }
 
 function formatMovie(movie) {
+  movie.backdrop_path = ApiTmdb.IMAGE_BASE_URL_500 + movie.backdrop_path;
   movie.poster_path = ApiTmdb.IMAGE_BASE_URL_500 + movie.poster_path;
   movie.year = moment(movie.release_date, "YYYY-MM-DD").format("YYYY");
 
@@ -275,7 +285,7 @@ function formatMovie(movie) {
 
   let productionCompanies = "";
   movie.production_companies.forEach((company, i) => {
-    productionCompanies += (i > 0 ? ", " : "") + company.name;
+    productionCompanies += (i > 0 ? "<br/>" : "") + company.name;
   });
   movie.production_companies = productionCompanies;
 
