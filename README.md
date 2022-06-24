@@ -1,5 +1,5 @@
 # NextFlick
- Discover what to watch next
+ Discover what to watch next. [Go to the website](https://deddyromnan.github.io/nextflick).
 
 |![image](https://user-images.githubusercontent.com/14845590/175571426-2eb356c9-c613-4517-b60e-3833525fb2f3.png)|![image](https://user-images.githubusercontent.com/14845590/175571634-a12754e8-7d12-444f-a470-f8098a7364a7.png)|
 |-|-|
